@@ -1,11 +1,88 @@
 
-<html>  
-<body> 
-<img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tollywood.net%2Fjathi-ratnalu-movie-review%2F&psig=AOvVaw1FsawhEsUvKcsBA6SIMq_T&ust=1627823980334000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCIiEuIOzjfICFQAAAAAdAAAAABAD"></img>
-<audio src="[iSongs.info] 01 - Chitti.mp3" type="audio/mpeg" controls > 
-</audio>  
-<audio src="Bagulu Odayum Dagulu Maari [Masstamilan.In]-.mp3" type="audio/mpeg" controls > 
-</audio>  
 
-  </body>
-</html>  
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="display: inline;">
+        <h1>Juke Box</h1>
+        <input type="text" placeholder="search music"id='music'>
+        <h2>Available songs-0</h2>
+        <ul id='ul'></ul>
+    </div>
+    <div style="display: inline;">
+        <audio  type="audio/mpeg" controls id="audio1" autoplay></audio><br>
+        <input type="button" value="forward" onclick="forward()">
+        <input type="button" value="backward" onclick="backward()">
+    </div>
+    
+    <script>
+        const audio1=document.getElementById('audio1')
+        const ul=document.getElementById('ul')
+        const music=document.getElementById('music')
+        const h2tag=document.querySelector('h2')
+        let m=['[iSongs.info] 01 - Chitti.mp3',"Bagulu Odayum Dagulu Maari [Masstamilan.In]-.mp3",'[iSongs.info] 02 - Naalona Pongenu (1).mp3','[iSongs.info] 02 - Undipova.mp3','[iSongs.info] 04 - Monna Kanipinchavu.mp3','[iSongs.info] 05 - Luckkanna Mate Nillu.mp3','[iSongs.info] 05 - O Shanthi Shanthi.mp3']
+        h2tag.innerHTML=`Available songs-${m.length}`
+        function ligenerator(arr){
+            arr.forEach(element => {
+                const litag=document.createElement('li')
+                litag.textContent=element
+                ul.appendChild(litag)
+                playtag(litag)
+            });
+        }
+        music.addEventListener('keyup',function(e){
+            const input=e.target.value.toLowerCase()
+            const result= m.filter(ele=>{
+                return ele.toLowerCase().includes(input)
+            });
+            ul.innerHTML=''
+            ligenerator(result)
+            h2tag.innerHTML=`Available songs-${result.length}`
+
+        })
+        ligenerator(m)
+        //play with tag 
+        function playtag(tag){
+            tag.addEventListener('click',function(){
+                const mus=tag.innerHTML
+                audio1.setAttribute('src',`${mus}`)
+                audio1.play()
+            })
+        }
+        function forward(){
+            let z=audio1.getAttribute('src')
+            if(m.indexOf(z)===m.length-1){
+                audio1.setAttribute('src',`${m[0]}`)
+            }
+            else{
+                audio1.setAttribute('src',`${m[m.indexOf(z)+1]}`)
+            }
+            audio1.play()
+           
+            
+        }
+        function backward(){
+            let z=audio1.getAttribute('src')
+            if(m.indexOf(z)===0){
+                audio1.setAttribute('src',`${m[m.length-1]}`)
+            }
+            else{
+                audio1.setAttribute('src',`${m[m.indexOf(z)-1]}`)
+            }
+            audio1.play()
+           
+            
+        }
+        // const k=Math.floor(Math.random()*(m.length))
+        // audio1.setAttribute('src',`audio/${m[k]}`)
+        // audio1.play()
+    </script>
+</audio>  
+</body>
+</html>
